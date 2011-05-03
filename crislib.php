@@ -1,68 +1,77 @@
 <?
-/*
- * CRISLIB.PHP
- * Licença: http://creativecommons.org/licenses/by-sa/3.0/legalcode
- *
- * Autor: Tiago Floriano <www.paico.com.br>
- * Site da lib: www.paico.com.br/crislib
- * 
- * Colaborações:
- *      Leo Caseiro <www.leocaseiro.com.br> - documentou e melhor a versão anterior
+/**
+* A crisLib é uma pequena biblioteca PHP para reaproveitar código e encurtar funções de forma que o dia-a-dia do programador será mais produtivo.
+* @name crisLib
+* @author Tiago Floriano <contato@paico.com.br>
+* @author Colaboração direta - Leo Caseiro <www.leocaseiro.com.br> - documentou e melhorou a versão anterior
+* @version 0.5
+* @license http://creativecommons.org/licenses/by-sa/3.0/legalcode
+* @link http://paico.com.br/crislib
+*/
+
+/**
+ * Algumas funções úteis
+ * @category diversos
  */
 
-########## DIVERSOS
-
-//arruma problema de codificação dentro de arquivos php chamados via ajax
-//fonte: http://elmicox.blogspot.com/2006/06/ajax-acentuao-soluo-final-1-linha-de.html
+/**
+ * Arruma problema de codificação dentro de arquivos php chamados via ajax. Código retirado do blog do Elmicox
+ * @name micoxdecode
+ * @link http://elmicox.blogspot.com/2006/06/ajax-acentuao-soluo-final-1-linha-de.html
+ */
 function micoxdecode(){
     header("Content-Type: text/html; charset=ISO-8859-1",true);
 }
 
-function gerauf($tipo, $selecione){ //Acho que poderia melhorar essa fun��o usando o selected="selected" e tamb�m trocando a ordem dos campos
+/**
+ * Gera uma tag select com a lista de UF para uso em formulários
+ * @name gerauf
+ * @param string $tipo
+ * @param string $selecione
+ * @param boolean|string $select
+ * @return string
+ */
+function gerauf($tipo, $selecione,$selected=false){ 
 	if($tipo == "full"){
 		echo "<select name=\"uf\">";
 		echo "<option>$selecione</option>";
 	}
-	echo "<option value=\"AC\">AC</option>
-	<option value=\"AL\">AL</option>
-	<option value=\"AP\">AP</option>
-	<option value=\"AM\">AM</option>
-	<option value=\"BA\">BA</option>
-	<option value=\"CE\">CE</option>
-	<option value=\"DF\">DF</option>
-	<option value=\"ES\">ES</option>
-	<option value=\"GO\">GO</option>
-	<option value=\"MA\">MA</option>
-	<option value=\"MT\">MT</option>
-	<option value=\"MS\">MS</option>
-	<option value=\"MG\">MG</option>
-	<option value=\"PA\">PA</option>
-	<option value=\"PB\">PB</option>
-	<option value=\"PR\">PR</option>
-	<option value=\"PE\">PE</option>
-	<option value=\"PI\">PI</option>
-	<option value=\"RJ\">RJ</option>
-	<option value=\"RN\">RN</option>
-	<option value=\"RS\">RS</option>
-	<option value=\"RO\">RO</option>
-	<option value=\"RR\">RR</option>
-	<option value=\"SC\">SC</option>
-	<option value=\"SP\">SP</option>
-	<option value=\"SE\">SE</option>
-	<option value=\"TO\">TO</option>";
+        $lista = array("AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO");
+        $c = 0; //contador
+        while($c != 27){
+            e("<option value=\"".$lista[$c]."\"");
+            if($selected == $lista[$c]){
+                e(" selected=\"selected\"");
+            }
+            e(">".$lista[$c]."</option>");
+            $c = $c + 1;
+        }
 	if($tipo == "full"){
 		echo "</select>";
 	}
 }
 
-########## TRATAMENTO DE STRING
+/**
+ * Funções para tratar variáveis em determinadas situações
+ * @category Tratamento de variáveis
+ */
 
-//trata string para ser usada em comando SQL
+/**
+ * Trata string para ser usada em comando SQL
+ * @name str
+ * @param string $nome
+ * @return string
+ */
 function str($nome){
 	return mysql_real_escape_string($nome);
 }
 
-//remove caracteres especiais de uma string e substitui por outro correspondente, ex.: é por e
+/**
+ * remove caracteres especiais de uma string e substitui por outro correspondente, ex.: "é" por "e" (sem aspas).
+ * @name remCE
+ * @param string $string
+ * @return string
+ */
 function remCE($string){
 	//retira acentos
 	$string = str_replace("ã","a",$string);
@@ -146,32 +155,53 @@ function remCE($string){
 	return $string;
 }
 
-//verifica se uma ou mais strings estão vazias
-function is_clear($var, $num){ //pega variavel e o n�mero de campos que h� nela
-	$str = explode(" ",$var); //registra array
-	$cont = 0;
-	while($cont <= $num){ //enquanto a $cont for diferente de $num, ele faz a verifica��o
-		if($str[$cont] != ""){ //se $str n�o for vazia, soma 1 na $result
+/**
+ * Verifica se uma ou mais variáveis estão vazias, indicado para pegar campos de formulários
+ * @name is_clear
+ * @param array $var
+ * @return boolean
+ */
+function is_clear($var){ 
+	$campos = count($var);
+        $c = 0;
+	while($c <= $campos){ 
+		if($str[$c] != ""){ 
 			$result = $result + 1;
 		}
-		$cont = $cont + 1;
+		$c = $c + 1;
 	}
-	if($result == $num){ //se todas as $str tiverem valor, o resultado deste if deve ser true
+	if($result == $campos){ 
 		return true;
-	}else{ //se houver algum campo vazio, dar� false
+	}else{ 
 		return false;
 	}
 }
 
-########## ALIASES DE FUNÇÕES
+/**
+ * Abreviaturas de funções
+ * @category Aliases de funções
+ */
 
-//echo
+/**
+ * Alias para função echo
+ * @name e
+ * @param string $texto
+ * @return string
+ */
 function e($texto){
 	echo $texto;
 }
 
-//tag p
-function p($texto,$alerta = false){ //(deixei por default o normal, assim...basta digitar p("escrevi aqui"); //Sem precisar do $alerta
+/**
+ * Alias para função p
+ * @name p
+ * @author Tiago Floriano <contato@paico.com.br>
+ * @author LeoCaseiro <www.leocaseiro.com.br> - modificou a função de modo que o $alerta ficasse falso por padrão
+ * @param string $texto
+ * @param int $alerta
+ * @return string
+ */
+function p($texto,$alerta = false){
 	if(!$alerta){
             e("<p>$texto</p>");
         }else{
@@ -183,13 +213,25 @@ function p($texto,$alerta = false){ //(deixei por default o normal, assim...bast
         }
 }
 
-//redirecionamento
+/**
+ * Alias para redir
+ * @name redir
+ * @since v. r2
+ * @param string $url
+ * @param int $tempo
+ * @return string
+ */
 function redir($url,$tempo){
     e("<meta http-equiv=\"refresh\" content=\"$tempo;URL=$url\">");
 }
 
-//mostra mensagem de informação usando jqueryui.com
-//para usa-la, faço o download da biblioteca js/css em http://jqueryui.com
+/**
+ * Mostra mensagem de informação usando jqueryui.com. Baixe a biblioteca em http://jqueryui.com
+ * @name info
+ * @since v. r2
+ * @param string $txt
+ * @return string
+ */
 function info($txt){
     e("<div class=\"ui-widget\" style=\"margin-top: 3px;\">");
     e("<div class=\"ui-state-highlight ui-corner-all\" style=\"padding: 5px;\">");
@@ -199,8 +241,13 @@ function info($txt){
     e("</div>");
 }
 
-//mostra mensagem de erro usando jqueryui.com
-//para usa-la, faço o download da biblioteca js/css em http://jqueryui.com
+/**
+ * Mostra mensagem de erro usando jqueryui.com. Baixe a biblioteca em http://jqueryui.com
+ * @name error
+ * @since v. r2
+ * @param string $txt
+ * @return string
+ */
 function error($txt){
     e("<div class=\"ui-widget\" style=\"margin-top: 3px;\">");
     e("<div class=\"ui-state-error ui-corner-all\" style=\"padding: 5px;\">");
@@ -210,22 +257,36 @@ function error($txt){
     e("</div>");
 }
 
-########## BANCO DE DADOS
+/**
+ * Funções relacionadas a pesquisa e manipulação de dados num banco mysql
+ * @category banco de dados
+ */
 
-//conecta ao db
+/**
+ * Conecta no mysql
+ * @name con
+ * @param string $usuario
+ * @param string $senha
+ * @param string|boolean $urlbanco
+ * @return boolean
+ */
 function con($usuario, $senha, $urlbanco = false){
 	if($urlbanco == false){
 		$urlbanco = "localhost";
 	}
 	if(!mysql_connect($urlbanco,$usuario,$senha)){
-		echo "Erro ao conectar no db.";
 		return false;
 	} else {
 		return true;
 	}
 }
 
-//seleciona db
+/**
+ * Seleciona banco no mysql
+ * @name db
+ * @param string $db
+ * @return boolean
+ */
 function db($db){
 	if(!mysql_select_db($db)){
 		echo "Erro ao selecionar db.";
@@ -233,6 +294,77 @@ function db($db){
 	} else {
 		return true;
 	}
+}
+
+/**
+ * Comando select do sql
+ * @name sel
+ * @param string $tabela
+ * @param string $condicoes
+ * @param string|boolean $ordem
+ * @param string|boolean $limite
+ * @return <type> 
+ */
+function sel($tabela, $condicoes, $ordem = false, $limite = false){
+	$query = "SELECT * FROM $tabela";
+	if($condicoes != "") {
+		$query .= " WHERE $condicoes";
+	}
+	if($ordem != ""){
+		$query .= " ORDER BY $ordem";
+	}
+	if($limite != ""){
+		$query .= " LIMIT $limite";
+	}
+	$sql = mysql_query($query) or die(mysql_error());
+	return $sql;
+}
+
+//retorna o valor de um campo específico em uma tabela
+function campo($tabela, $campo, $id){
+	$sel = mysql_query("SELECT * FROM $tabela WHERE id = '$id'") or die(mysql_error());
+	$r = mysql_fetch_array($sel);
+	return $r[$campo];
+}
+
+//função insert melhorada
+function ins($tabela, $campos, $valores){
+	$query = "INSERT INTO $tabela ($campos) VALUES ($valores)";
+	$sql = mysql_query($query) or die(mysql_error());
+	return $sql;
+}
+
+//função update melhorada
+function upd($tabela, $dados, $id){
+	$query = "UPDATE $tabela SET $dados WHERE id = '$id'";
+	$sql = mysql_query($query) or die(mysql_error());
+	return $sql;
+}
+
+//função delete melhorada
+function del($tabela, $id){
+	$query = "DELETE FROM $tabela WHERE id = '$id'";
+	$sql = mysql_query($query) or die(mysql_error());
+	return $sql;
+}
+
+
+//retorna número de resultados de uma query
+function total($query){
+	$num = mysql_num_rows($query);
+	return $num;
+}
+
+//aliás para função fetch
+function fetch($query){
+	$fetch = mysql_fetch_array($query);
+	return $fetch;
+}
+
+//alias create table
+function createT($nometabela,$campos){
+	$sql = mysql_query("CREATE TABLE IF NOT EXISTS $nometabela ( id int(11), $campos, primary key(id) )") or die(mysql_error());
+	return $sql;
 }
 
 //faz login de usuário
@@ -317,68 +449,6 @@ function is_on($tabela_de_usuarios, $tabela_de_sessoes = false){
 			return true;
 		}
 	}
-}
-
-//retorna número de resultados de uma query
-function total($query){
-	$num = mysql_num_rows($query);
-	return $num;
-}
-
-//aliás para função fetch
-function fetch($query){
-	$fetch = mysql_fetch_array($query);
-	return $fetch;
-}
-
-//select melhorado
-function sel($tabela, $condicoes, $ordem = false, $limite = false){
-	$query = "SELECT * FROM $tabela";
-	if($condicoes != "") {
-		$query .= " WHERE $condicoes";
-	}
-	if($ordem != ""){
-		$query .= " ORDER BY $ordem";
-	}
-	if($limite != ""){
-		$query .= " LIMIT $limite";
-	}
-	$sql = mysql_query($query) or die(mysql_error());
-	return $sql;
-}
-
-//retorna o valor de um campo específico em uma tabela
-function campo($tabela, $campo, $id){
-	$sel = mysql_query("SELECT * FROM $tabela WHERE id = '$id'") or die(mysql_error());
-	$r = mysql_fetch_array($sel);
-	return $r[$campo];
-}
-
-//função insert melhorada
-function ins($tabela, $campos, $valores){
-	$query = "INSERT INTO $tabela ($campos) VALUES ($valores)";
-	$sql = mysql_query($query) or die(mysql_error());
-	return $sql;
-}
-
-//função update melhorada
-function upd($tabela, $dados, $id){
-	$query = "UPDATE $tabela SET $dados WHERE id = '$id'";
-	$sql = mysql_query($query) or die(mysql_error());
-	return $sql;
-}
-
-//função delete melhorada
-function del($tabela, $id){
-	$query = "DELETE FROM $tabela WHERE id = '$id'";
-	$sql = mysql_query($query) or die(mysql_error());
-	return $sql;
-}
-
-//alias create table
-function createT($nometabela,$campos){
-	$sql = mysql_query("CREATE TABLE IF NOT EXISTS $nometabela ( id int(11), $campos, primary key(id) )") or die(mysql_error());
-	return $sql;
 }
 
 ########## ARQUIVOS
