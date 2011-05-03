@@ -1,6 +1,7 @@
 <?
 /*
  * CRISLIB.PHP
+ * Licença: http://creativecommons.org/licenses/by-sa/3.0/legalcode
  *
  * Autor: Tiago Floriano <www.paico.com.br>
  * Site da lib: www.paico.com.br/crislib
