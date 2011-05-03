@@ -12,6 +12,7 @@
 ########## DIVERSOS
 
 //arruma problema de codificação dentro de arquivos php chamados via ajax
+//fonte: http://elmicox.blogspot.com/2006/06/ajax-acentuao-soluo-final-1-linha-de.html
 function micoxdecode(){
     header("Content-Type: text/html; charset=ISO-8859-1",true);
 }
@@ -63,32 +64,35 @@ function str($nome){
 //remove caracteres especiais de uma string e substitui por outro correspondente, ex.: é por e
 function remCE($string){
 	//retira acentos
-	$string = str_replace("�","a",$string);
-	$string = str_replace("�","a",$string);
-	$string = str_replace("�","a",$string);
-	$string = str_replace("�","a",$string);
-	$string = str_replace("�","a",$string);
+	$string = str_replace("ã","a",$string);
+	$string = str_replace("á","a",$string);
+	$string = str_replace("à","a",$string);
+	$string = str_replace("ä","a",$string);
+	$string = str_replace("â","a",$string);
 
-	$string = str_replace("�","e",$string);
-	$string = str_replace("�","e",$string);
-	$string = str_replace("�","e",$string);
-	$string = str_replace("�","e",$string);
+	$string = str_replace("ẽ","e",$string);
+	$string = str_replace("é","e",$string);
+	$string = str_replace("è","e",$string);
+	$string = str_replace("ë","e",$string);
+	$string = str_replace("ê","e",$string);
 
-	$string = str_replace("�","i",$string);
-	$string = str_replace("�","i",$string);
-	$string = str_replace("�","i",$string);
-	$string = str_replace("�","i",$string);
+	$string = str_replace("ĩ","i",$string);
+	$string = str_replace("í","i",$string);
+	$string = str_replace("ì","i",$string);
+	$string = str_replace("ï","i",$string);
+	$string = str_replace("î","i",$string);
 
-	$string = str_replace("�","o",$string);
-	$string = str_replace("�","o",$string);
-	$string = str_replace("�","o",$string);
-	$string = str_replace("�","o",$string);
-	$string = str_replace("�","o",$string);
+	$string = str_replace("õ","o",$string);
+	$string = str_replace("ó","o",$string);
+	$string = str_replace("ò","o",$string);
+	$string = str_replace("ö","o",$string);
+	$string = str_replace("ô","o",$string);
 
-	$string = str_replace("�","u",$string);
-	$string = str_replace("�","u",$string);
-	$string = str_replace("�","u",$string);
-	$string = str_replace("�","u",$string);
+	$string = str_replace("ũ","u",$string);
+	$string = str_replace("ú","u",$string);
+	$string = str_replace("ù","u",$string);
+	$string = str_replace("ü","u",$string);
+	$string = str_replace("û","u",$string);
 
 	//retira outras porcarias
 	$string = str_replace("\"","",$string);
@@ -182,6 +186,7 @@ function redir($url,$tempo){
 }
 
 //mostra mensagem de informação usando jqueryui.com
+//para usa-la, faço o download da biblioteca js/css em http://jqueryui.com
 function info($txt){
     e("<div class=\"ui-widget\" style=\"margin-top: 3px;\">");
     e("<div class=\"ui-state-highlight ui-corner-all\" style=\"padding: 5px;\">");
@@ -192,6 +197,7 @@ function info($txt){
 }
 
 //mostra mensagem de erro usando jqueryui.com
+//para usa-la, faço o download da biblioteca js/css em http://jqueryui.com
 function error($txt){
     e("<div class=\"ui-widget\" style=\"margin-top: 3px;\">");
     e("<div class=\"ui-state-error ui-corner-all\" style=\"padding: 5px;\">");
