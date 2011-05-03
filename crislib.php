@@ -171,14 +171,16 @@ function e($texto){
 }
 
 //tag p
-function p($texto, $red = false){ //(deixei por default o normal, assim...basta digitar p("escrevi aqui"); //Sem precisar do $red
-	if(!$red){ //mensagem normal
-		e("<p align=\"center\">$texto</p>");
-	}elseif($red){ //mensagem de erro
-		e("<p align=\"center\" style=\"color: red\">$texto</p>");
-	}else{
-		echo "<p>$texto</p>";
-	}
+function p($texto,$alerta = false){ //(deixei por default o normal, assim...basta digitar p("escrevi aqui"); //Sem precisar do $alerta
+	if(!$alerta){
+            e("<p>$texto</p>");
+        }else{
+            if($alerta == 1){
+                e("<p align=\"center\" style=\"color: red\"><b>$texto</b></p>");
+            }else{
+                e("<p align=\"center\">$texto</p>");
+            }
+        }
 }
 
 //redirecionamento
