@@ -307,7 +307,7 @@ function db($db){
 }
 
 /**
- * Comando select do sql
+ * Comando SELECT do SQL
  * @name sel
  * @param string $tabela
  * @param string $condicoes
@@ -345,14 +345,27 @@ function campo($tabela, $campo, $id){
 	return $r[$campo];
 }
 
-//função insert melhorada
+/**
+ * Comando INSERT do SQL
+ * @param string $tabela
+ * @param string $campos
+ * @param int $valores
+ * @example ins("pessoas","nome, email","'Tiago', 'email@mail.com'");
+ * @return <type> 
+ */
 function ins($tabela, $campos, $valores){
 	$query = "INSERT INTO $tabela ($campos) VALUES ($valores)";
 	$sql = mysql_query($query) or die(mysql_error());
 	return $sql;
 }
 
-//função update melhorada
+/**
+ * Comando UPDATE do SQL
+ * @param string $tabela
+ * @param string $dados
+ * @param int $id
+ * @return <type>
+ */
 function upd($tabela, $dados, $id){
 	$query = "UPDATE $tabela SET $dados WHERE id = '$id'";
 	$sql = mysql_query($query) or die(mysql_error());
