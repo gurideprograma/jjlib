@@ -29,6 +29,7 @@ function micoxdecode(){
  * @param string $tipo
  * @param string $selecione
  * @param boolean|string $select
+ * @example gerauf("full","Selecione","RS"); ou gerauf("full","UF"); ou gerauf("","");
  * @return string
  */
 function gerauf($tipo, $selecione,$selected=false){ 
@@ -60,6 +61,7 @@ function gerauf($tipo, $selecione,$selected=false){
  * Trata string para ser usada em comando SQL
  * @name str
  * @param string $nome
+ * @example str("Açúcar' or id = '1'");
  * @return string
  */
 function str($nome){
@@ -70,6 +72,7 @@ function str($nome){
  * remove caracteres especiais de uma string e substitui por outro correspondente, ex.: "é" por "e" (sem aspas).
  * @name remCE
  * @param string $string
+ * @example remCE("açúcar"); //retonará acucar
  * @return string
  */
 function remCE($string){
@@ -103,6 +106,8 @@ function remCE($string){
 	$string = str_replace("ù","u",$string);
 	$string = str_replace("ü","u",$string);
 	$string = str_replace("û","u",$string);
+
+	$string = str_replace("ç","c",$string);
 
 	//retira outras porcarias
 	$string = str_replace("\"","",$string);
@@ -159,6 +164,7 @@ function remCE($string){
  * Verifica se uma ou mais variáveis estão vazias, indicado para pegar campos de formulários
  * @name is_clear
  * @param array $var
+ * @example is_clear($_POST["nome"],$_POST["email"]);
  * @return boolean
  */
 function is_clear($var){ 
@@ -219,6 +225,7 @@ function p($texto,$alerta = false){
  * @since v. r2
  * @param string $url
  * @param int $tempo
+ * @example redir("http://paico.com.br",2);
  * @return string
  */
 function redir($url,$tempo){
@@ -230,6 +237,7 @@ function redir($url,$tempo){
  * @name info
  * @since v. r2
  * @param string $txt
+ * @example info("Cadastro efetuado com sucesso!");
  * @return string
  */
 function info($txt){
@@ -246,6 +254,7 @@ function info($txt){
  * @name error
  * @since v. r2
  * @param string $txt
+ * @example error("Você não preencheu o campo e-mail!");
  * @return string
  */
 function error($txt){
@@ -268,6 +277,7 @@ function error($txt){
  * @param string $usuario
  * @param string $senha
  * @param string|boolean $urlbanco
+ * @example con("root","");
  * @return boolean
  */
 function con($usuario, $senha, $urlbanco = false){
@@ -303,6 +313,7 @@ function db($db){
  * @param string $condicoes
  * @param string|boolean $ordem
  * @param string|boolean $limite
+ * @example sel("pessoas","nome = 'Tiago'","nome ASC",50); ou sel("pessoas","nome like '%Tiago%'");
  * @return <type> 
  */
 function sel($tabela, $condicoes, $ordem = false, $limite = false){
@@ -320,7 +331,14 @@ function sel($tabela, $condicoes, $ordem = false, $limite = false){
 	return $sql;
 }
 
-//retorna o valor de um campo específico em uma tabela
+/**
+ * Retorna o valor de um campo específico em uma tabela
+ * @param string $tabela
+ * @param string $campo
+ * @param int $id
+ * @example campo("pessoas","nome",4);
+ * @return string
+ */
 function campo($tabela, $campo, $id){
 	$sel = mysql_query("SELECT * FROM $tabela WHERE id = '$id'") or die(mysql_error());
 	$r = mysql_fetch_array($sel);
