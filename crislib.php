@@ -4,7 +4,7 @@
 * @name crisLib
 * @author Tiago Floriano <contato@paico.com.br>
 * @author Colaboração direta - Leo Caseiro <www.leocaseiro.com.br> - documentou e melhorou a versão anterior
-* @version 0.13
+* @version 0.15
 * @license http://creativecommons.org/licenses/by-sa/3.0/legalcode
 * @link http://paico.com.br/crislib
 */
@@ -642,7 +642,10 @@ function arq($arquivo){
 }
 
 
-########## E-MAIL
+/**
+ * Funções relacionadas a e-mails
+ * @category E-mail
+ */
 
 //envia email usando a função mail ou smtp
 function sendmail($destino, $assunto, $mensagem, $remetente, $tipo, $protocolo){//o $tipo � se o e-mail � html ou somente texto, o $protocolo � se � usando a fun��o mail ou smtp
