@@ -314,7 +314,7 @@ function db($db){
  * @param string|boolean $ordem
  * @param string|boolean $limite
  * @example sel("pessoas","nome = 'Tiago'","nome ASC",50); ou sel("pessoas","nome like '%Tiago%'");
- * @return <type> 
+ * @return <type>
  */
 function sel($tabela, $condicoes, $ordem = false, $limite = false){
 	$query = "SELECT * FROM $tabela";
@@ -328,11 +328,11 @@ function sel($tabela, $condicoes, $ordem = false, $limite = false){
 		$query .= " LIMIT $limite";
 	}
 	$sql = mysql_query($query) or die(mysql_error());
-	return $sql;
 }
 
 /**
  * Retorna o valor de um campo específico em uma tabela
+ * @name campo
  * @param string $tabela
  * @param string $campo
  * @param int $id
@@ -347,55 +347,100 @@ function campo($tabela, $campo, $id){
 
 /**
  * Comando INSERT do SQL
+ * @name ins
  * @param string $tabela
  * @param string $campos
  * @param int $valores
  * @example ins("pessoas","nome, email","'Tiago', 'email@mail.com'");
- * @return <type> 
+ * @return boolean
  */
 function ins($tabela, $campos, $valores){
 	$query = "INSERT INTO $tabela ($campos) VALUES ($valores)";
 	$sql = mysql_query($query) or die(mysql_error());
-	return $sql;
+        if(!$sql){
+            return false;
+        }else{
+            return true;
+        }
 }
 
 /**
  * Comando UPDATE do SQL
+ * @name upd
  * @param string $tabela
  * @param string $dados
  * @param int $id
- * @return <type>
+ * @example upd("pessoas","nome = 'Tiago'",5);
+ * @return boolean
  */
 function upd($tabela, $dados, $id){
 	$query = "UPDATE $tabela SET $dados WHERE id = '$id'";
 	$sql = mysql_query($query) or die(mysql_error());
-	return $sql;
+        if(!$sql){
+            return false;
+        }else{
+            return true;
+        }
 }
 
-//função delete melhorada
+/**
+ * Comando DELETE do SQL
+ * @name del
+ * @param string $tabela
+ * @param int $id
+ * @example del("pessoas",5);
+ * @return boolean
+ */
 function del($tabela, $id){
 	$query = "DELETE FROM $tabela WHERE id = '$id'";
 	$sql = mysql_query($query) or die(mysql_error());
-	return $sql;
+        if(!$sql){
+            return false;
+        }else{
+            return true;
+        }
 }
 
 
-//retorna número de resultados de uma query
+/**
+ * Retorna número de resultados de uma query
+ * @name total
+ * @param array $query
+ * @example $sel = sel("pessoas",""); echo total($sel);
+ * @return int
+ */
 function total($query){
 	$num = mysql_num_rows($query);
 	return $num;
 }
 
-//aliás para função fetch
+/**
+ * Alias para função mysql_fetch_array
+ * @name fetch
+ * @param <type> $query
+ * @example while($r = fetch($sel){ ... }
+ * @return <type>
+ */
 function fetch($query){
 	$fetch = mysql_fetch_array($query);
 	return $fetch;
 }
 
-//alias create table
-function createT($nometabela,$campos){
+/**
+ * Cria tabelas
+ * @name ctable
+ * @param string $nometabela
+ * @param string $campos
+ * @example ctable("pessoas","nome text, email vachar(50)");
+ * @return boolean
+ */
+function ctable($nometabela,$campos){
 	$sql = mysql_query("CREATE TABLE IF NOT EXISTS $nometabela ( id int(11), $campos, primary key(id) )") or die(mysql_error());
-	return $sql;
+        if(!$sql){
+            return false;
+        }else{
+            return true;
+        }
 }
 
 //faz login de usuário
