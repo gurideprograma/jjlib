@@ -4,7 +4,7 @@
 * @name crisLib
 * @author Tiago Floriano <contato@paico.com.br>
 * @author Colaboração direta - Leo Caseiro <www.leocaseiro.com.br> - documentou e melhorou a versão anterior
-* @version 0.5
+* @version 0.13
 * @license http://creativecommons.org/licenses/by-sa/3.0/legalcode
 * @link http://paico.com.br/crislib
 */
@@ -443,7 +443,16 @@ function ctable($nometabela,$campos){
         }
 }
 
-//faz login de usuário
+/**
+ * Faz login de usuário, usando uma tabela com os campos usuario e senha, e outra tabela para gerenciar sessões, com usuario, senha, sessao, status. Função muito antiga, quem puder melhora-la, fique a vontade :)
+ * @name login
+ * @param string $usuario
+ * @param string $senha
+ * @param string $tabela_de_usuarios
+ * @param string $tabela_de_sessoes
+ * @param string $destino
+ * @example login("paico","123456","pessoas","sessoes","/painel/");
+ */
 function login($usuario, $senha, $tabela_de_usuarios, $tabela_de_sessoes, $destino){
 	//verifica se o usu�rio e a senha constam na tabela
 	echo "Verificando usu&aacute;rio ... ";
@@ -472,7 +481,16 @@ function login($usuario, $senha, $tabela_de_usuarios, $tabela_de_sessoes, $desti
 	}
 }
 
-//faz logoff de usuário
+/**
+ * Faz o logoff do usuário, depois de ter usado o login();
+ * @name logoff
+ * @param string $usuario
+ * @param string $senha
+ * @param string $tabela_de_usuarios
+ * @param string $tabela_de_sessoes
+ * @param string $destino
+ * @example logoff("paico","123456","pessoas","sessoes","/home/");
+ */
 function logoff($usuario, $senha, $tabela_de_usuarios, $tabela_de_sessoes, $destino){
 	if($tabela_de_sessoes != ""){
 		$ids = $_SESSION["idsession"];
@@ -497,16 +515,28 @@ function logoff($usuario, $senha, $tabela_de_usuarios, $tabela_de_sessoes, $dest
 	}
 }
 
-//verifica se o usuário está autenticado e o redireciona
-function is_autenticado($tabela_de_usuarios, $destino, $tabela_de_sessoes) {
-	if(is_on($tabela_de_usuarios,$tabela_de_sessoes) == false){
+/**
+ * Verifica se o usuário está logado usando ison() e, se não tiver, já o redireciona para a página de $destino
+ * @name isonredir
+ * @param string $tabela_de_usuarios
+ * @param string $destino
+ * @param string $tabela_de_sessoes
+ */
+function isonredir($tabela_de_usuarios, $destino, $tabela_de_sessoes) {
+	if(ison($tabela_de_usuarios,$tabela_de_sessoes) == false){
 		e("Voc&ecirc; n&atilde;o est&aacute; logado! Redirecionando...");
 		e("<meta http-equiv=\"refresh\" content=\"0;URL=$destino\">");
 	}
 }
 
-//verifica se o usuário está autenticado e retorna o resultado
-function is_on($tabela_de_usuarios, $tabela_de_sessoes = false){
+/**
+ * Verifica se o usuário está logado e retorna true ou false
+ * @name ison
+ * @param string $tabela_de_usuarios
+ * @param string|boolean $tabela_de_sessoes
+ * @return boolean
+ */
+function ison($tabela_de_usuarios, $tabela_de_sessoes = false){
 	$login = str($_SESSION["login"]);
 	$senha = str($_SESSION["senha"]);
 	$sel = sel($tabela_de_usuarios,"usuario = '$login' and senha = '$senha'","","");
@@ -527,15 +557,29 @@ function is_on($tabela_de_usuarios, $tabela_de_sessoes = false){
 	}
 }
 
-########## ARQUIVOS
+/**
+ * Manipulação de arquivos
+ * @category Arquivos
+ */
 
 //upload de arquivos
 function up($arquivo,$destino,$extensoes){//para permitir todas extens��es de arquivos, deixe a $extens�es em branco, se n�o, informe todas as extens�es permitidas
 
 }
 
-//cria miniatura de imagens
-function im($imagem, $h, $w){
+/**
+ * Cria miniatura de imagens
+ * @name im
+ * @author SnipTools <www.sniptools.com>
+ * @author Tiago Floriano <contato@paico.com.br> - adaptações
+ * @param string $imagem
+ * @param int $h
+ * @param int $w
+ * @example im("imagens/minhaimagem.png",200,150)
+ * @since 2007-10-27
+ * @return string
+ */
+function im($imagem, $w, $h){
 	//verifica na $imagem o que � pasta, o que � arquivo e o que � extens�o
 	$explode = explode("/",$imagem);
 	$pasta = $explode[0]."/"; // $pasta = pasta_de_imagens/
@@ -632,9 +676,18 @@ function delmail($email,$senha){
 
 }
 
-########## DATA
+/**
+ * Manipulação de dadas
+ * @category Datas
+ */
 
-//transforma o número do mês em nome escrito por extenso. Ex.: 01 = janeiro
+/**
+ * Transforma o número do mês em nome escrito por extenso
+ * @name mes
+ * @param int $mes
+ * @example mes(3); //retorna "março"
+ * @return string
+ */
 function mes($mes){
 	if($mes == 1){
 		$mes = "janeiro";
@@ -675,24 +728,42 @@ function mes($mes){
 	return $mes;
 }
 
-//muda formato de data para AAAA-mm-dd, dd/mm/AAAA ou dd de mm de AAAA
+/**
+ * Muda formato de data para AAAA-mm-dd, dd/mm/AAAA ou dd de mm de AAAA
+ * @name data
+ * @param string $data
+ * @param int $tipo
+ * @example data("2011-05-06",2); //retorna 06/05/2011
+ * @return string
+ */
 function data($data, $tipo = 0){
-	if($tipo == 0){
-		$data = explode("-",$data);
-		$data = $data[2]."/".$data[1]."/".$data[0];
-	}elseif($tipo == 1){
-		$data = explode("-",$data);
-		$data = $data[2]." de ".mes($data[1])." de ".$data[0];
-	}else{
-		$data = explode("/",$data);
-		$data = $data[2]."-".$data[1]."-".$data[0];
+    if($tipo == 0){
+            $data = explode("-",$data);
+            $data = $data[2]."/".$data[1]."/".$data[0];
+    }elseif($tipo == 1){
+            $data = explode("-",$data);
+            $data = $data[2]." de ".mes($data[1])." de ".$data[0];
+    }else{
+            $data = explode("/",$data);
+            $data = $data[2]."-".$data[1]."-".$data[0];
     }
-	return $data;
+    return $data;
 }
 
-########## SEGURANÇA
 
-//máscara para url
+/**
+ * Scripts para melhorar a segurança
+ * @category Segurança
+ */
+
+/**
+ * Máscara para URLs
+ * @name url
+ * @param string $uri
+ * @param string $pasta
+ * @example url($_SERVER['REQUEST_URI'],"meusite/");
+ * @return string
+ */
 function url($uri, $pasta) { //Podemos amadurecer mais ainda esta fun��o
 	if($uri == "/$pasta"){ $uri = "/?home"; }
 	$uri = explode("?",$uri);
