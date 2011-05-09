@@ -647,8 +647,17 @@ function arq($arquivo){
  * @category E-mail
  */
 
-//envia email usando a função mail ou smtp
-function sendmail($destino, $assunto, $mensagem, $remetente, $tipo, $protocolo){//o $tipo � se o e-mail � html ou somente texto, o $protocolo � se � usando a fun��o mail ou smtp
+/**
+ * Envia e-mail escolhendo se o envio será usando html ou texto simples e, se usará a função mail ou smtp
+ * @param string $destino
+ * @param string $assunto
+ * @param string $mensagem
+ * @param string $remetente
+ * @param string $tipo
+ * @param string $protocolo
+ * @return boolean
+ */
+function sendmail($destino, $assunto, $mensagem, $remetente, $tipo, $protocolo = "mail"){//o $tipo � se o e-mail � html ou somente texto, o $protocolo � se � usando a fun��o mail ou smtp
 	if($protocolo == "mail"){ //criado por LeoCaseiro e adaptado por Tiago Floriano
 		if($tipo == "html"){
 			/* Para enviar email HTML, voc� precisa definir o header Content-type. */
