@@ -53,6 +53,28 @@ function gerauf($tipo, $selecione,$selected=false){
 }
 
 /**
+ * Encurtador para incluir arquivo java-script
+ * @name js
+ * @param string $path
+ * @example js("inc/funcoes.js");
+ * @return string
+ */
+function js($path){
+    e("<script type=\"text/javascript\" src=\"$path\"></script>");
+}
+
+/**
+ * Encurtador para incluir arquivo CSS
+ * @name css
+ * @param string $path
+ * @example css("inc/folha.css");
+ * @return string
+ */
+function css($path){
+    e("<link rel=\"stylesheet\" type=\"text/css\" href=\"$path\">");
+}
+
+/**
  * Funções para tratar variáveis em determinadas situações
  * @category Tratamento de variáveis
  */
@@ -545,7 +567,7 @@ function ison($tabela_de_usuarios, $tabela_de_sessoes = false){
 	}else{
 		if($tabela_de_sessoes != ""){
 			$ids = $_SESSION["idsession"];
-			$sel = sel($tabela_de_sessoes,"ids = '$ids' and usuario = '$usuario and senha = '$senha'","","");
+			$sel = sel($tabela_de_sessoes,"ids = '$ids' and usuario = '$login and senha = '$senha'","","");
 			if(total($sel) == 0){
 				return false;
 			}else{
