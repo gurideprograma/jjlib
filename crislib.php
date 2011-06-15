@@ -4,7 +4,7 @@
 * @name crisLib
 * @author Tiago Floriano <contato@paico.com.br>
 * @author Colaboração direta - Leo Caseiro <www.leocaseiro.com.br> - documentou e melhorou a versão anterior
-* @version 0.17
+* @version 0.19
 * @license http://creativecommons.org/licenses/by-sa/3.0/legalcode
 * @link http://paico.com.br/crislib 
 */
@@ -55,6 +55,7 @@ function gerauf($tipo, $selecione,$selected=false){
 /**
  * Encurtador para incluir arquivo java-script
  * @name js
+ * @since r18
  * @param string $path
  * @example js("inc/funcoes.js");
  * @return string
@@ -66,6 +67,7 @@ function js($path){
 /**
  * Encurtador para incluir arquivo CSS
  * @name css
+ * @since r18
  * @param string $path
  * @example css("inc/folha.css");
  * @return string
@@ -255,7 +257,7 @@ function redir($url,$tempo){
 }
 
 /**
- * Mostra mensagem de informação usando jqueryui.com. Baixe a biblioteca em http://jqueryui.com
+ * Mostra mensagem de informação usando jqueryui.com. Baixe a biblioteca em http://jqueryui.com para usar esta função.
  * @name info
  * @since v. r2
  * @param string $txt
@@ -272,7 +274,7 @@ function info($txt){
 }
 
 /**
- * Mostra mensagem de erro usando jqueryui.com. Baixe a biblioteca em http://jqueryui.com
+ * Mostra mensagem de erro usando jqueryui.com. Baixe a biblioteca em http://jqueryui.com para usar esta função.
  * @name error
  * @since v. r2
  * @param string $txt
