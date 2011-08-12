@@ -4,7 +4,7 @@
 * @name crisLib
 * @author Tiago Floriano <contato@paico.com.br>
 * @author Colaboração direta - Leo Caseiro <www.leocaseiro.com.br> - documentou e melhorou a versão anterior
-* @version 0.21
+* @version 0.22
 * @license http://creativecommons.org/licenses/by-sa/3.0/legalcode
 * @link http://paico.com.br/crislib 
 */
@@ -244,7 +244,7 @@ function p($texto,$alerta = false){
 }
 
 /**
- * Alias para redir
+ * Alias para meta tag de redirecionamento
  * @name redir
  * @since v. r2
  * @param string $url
@@ -288,6 +288,30 @@ function error($txt){
     e($txt);
     e("</div>");
     e("</div>");
+}
+
+/**
+ * Alias para uma div com o atributo clear do CSS contendo valor both
+ * @name cboth
+ * @since r22
+ * @example cboth();
+ */
+function cboth(){
+    e("<div style=\"clear:both\"></div>");
+}
+
+/**
+ * Não guarda cache do arquivo.
+ * @name nocache
+ * @since r22
+ * @example nocache();
+ */
+function nocache(){
+    $gmtDate = gmdate("D, d M Y H:i:s");
+    header("Expires: {$gmtDate} GMT");
+    header("Last-Modified: {$gmtDate} GMT");
+    header("Cache-Control: no-cache, must-revalidate");
+    header("Pragma: no-cache");
 }
 
 /**
