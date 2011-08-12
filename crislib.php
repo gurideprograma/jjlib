@@ -4,7 +4,7 @@
 * @name crisLib
 * @author Tiago Floriano <contato@paico.com.br>
 * @author Colaboração direta - Leo Caseiro <www.leocaseiro.com.br> - documentou e melhorou a versão anterior
-* @version 0.19
+* @version 0.21
 * @license http://creativecommons.org/licenses/by-sa/3.0/legalcode
 * @link http://paico.com.br/crislib 
 */
@@ -100,6 +100,9 @@ function str($nome){
  * @return string
  */
 function remCE($string){
+        //
+        $string = addslashes($string);
+        $string = htmlspecialchars($string);
 	//retira acentos
 	$string = str_replace("ã","a",$string);
 	$string = str_replace("á","a",$string);
@@ -107,7 +110,7 @@ function remCE($string){
 	$string = str_replace("ä","a",$string);
 	$string = str_replace("â","a",$string);
 
-	$string = str_replace("ẽ","e",$string);
+	#$string = str_replace("ẽ","e",$string);
 	$string = str_replace("é","e",$string);
 	$string = str_replace("è","e",$string);
 	$string = str_replace("ë","e",$string);
@@ -136,13 +139,17 @@ function remCE($string){
 	//retira outras porcarias
 	$string = str_replace("\"","",$string);
 	$string = str_replace("'","",$string);
-	$string = str_replace("�","",$string);
-	$string = str_replace("`","",$string);
 	$string = str_replace("!","",$string);
+	$string = str_replace("¹","",$string);
+	$string = str_replace("@","",$string);
+	$string = str_replace("²","",$string);
 	$string = str_replace("#","",$string);
+	$string = str_replace("³","",$string);
 	$string = str_replace("$","",$string);
+	$string = str_replace("£","",$string);
 	$string = str_replace("%","",$string);
-	$string = str_replace("�","",$string);
+	$string = str_replace("¢","",$string);
+	$string = str_replace("¬","",$string);
 	$string = str_replace("&","",$string);
 	$string = str_replace("*","",$string);
 	$string = str_replace("(","",$string);
@@ -151,35 +158,28 @@ function remCE($string){
 	$string = str_replace("-","",$string);
 	$string = str_replace("+","",$string);
 	$string = str_replace("=","",$string);
-	$string = str_replace("�","",$string);
-	$string = str_replace("}","",$string);
-	$string = str_replace("]","",$string);
-	$string = str_replace("�","",$string);
-	$string = str_replace("�","",$string);
-	$string = str_replace("�","",$string);
-	$string = str_replace("�","",$string);
-	$string = str_replace("�","",$string);
-	$string = str_replace("�","",$string);
+	$string = str_replace("§","",$string);
+	$string = str_replace("`","",$string);
 	$string = str_replace("{","",$string);
 	$string = str_replace("[","",$string);
-	$string = str_replace("�","",$string);
+	$string = str_replace("ª","",$string);
 	$string = str_replace("^","",$string);
 	$string = str_replace("~","",$string);
-	$string = str_replace("?","",$string);
-	$string = str_replace("/","",$string);
-	$string = str_replace("�","",$string);
+	$string = str_replace("}","",$string);
+	$string = str_replace("]","",$string);
+	$string = str_replace("º","",$string);
+	$string = str_replace("|","",$string);
+	$string = str_replace("\\","",$string);
 	$string = str_replace("<","",$string);
 	$string = str_replace(",","",$string);
 	$string = str_replace(">","",$string);
-#	$string = str_replace(".","",$string);
+	$string = str_replace(".","",$string);
 	$string = str_replace(":","",$string);
 	$string = str_replace(";","",$string);
-	$string = str_replace("|","",$string);
-	$string = str_replace("\\","",$string);
+	$string = str_replace("?","",$string);
+	$string = str_replace("/","",$string);
+	$string = str_replace("°","",$string);
 	$string = str_replace(" ","",$string);
-
-	//retira espa�os
-	$string = trim($string);
 
 	return $string;
 }
