@@ -2,7 +2,7 @@
 /**
 * A crisLib é uma pequena biblioteca PHP para reaproveitar código e encurtar funções de forma que o dia-a-dia do programador será mais produtivo.
 * @name crisLib
-* @author Tiago Floriano <contato@paico.com.br>
+* @author Tiago Floriano <mail@paico.com.br>
 * @author Colaboração direta - Leo Caseiro <www.leocaseiro.com.br> - documentou e melhorou a versão anterior
 * @version 0.22
 * @license http://creativecommons.org/licenses/by-sa/3.0/legalcode
@@ -19,8 +19,9 @@
  * @name micoxdecode
  * @link http://elmicox.blogspot.com/2006/06/ajax-acentuao-soluo-final-1-linha-de.html
  */
-function micoxdecode(){
-    header("Content-Type: text/html; charset=ISO-8859-1",true);
+function micoxdecode($utf8=false){
+        if($utf8 == false){ $char = "ISO-8859-1"; }else{ $char = "UTF8"; }
+        @header("Content-Type: text/html; charset=$char",true);
 }
 
 /**
@@ -74,6 +75,13 @@ function js($path){
  */
 function css($path){
     e("<link rel=\"stylesheet\" type=\"text/css\" href=\"$path\">");
+}
+
+/**
+ *
+ */
+function setTZ(){
+    date_default_timezone_set('America/Sao_Paulo');
 }
 
 /**
@@ -205,6 +213,22 @@ function is_clear($var){
 	}else{ 
 		return false;
 	}
+}
+
+/**
+ * Função para exibir textos que usam UTF8, em caixa alta
+ * @name strup
+ * @param string $texto
+ * @param int $utf
+ * @return string
+ */
+function strup($texto,$utf=false){
+        $var = mb_strtoupper(utf8_decode($texto));
+        $var = str_replace("ACUTE;","acute;",$var);
+        $var = str_replace("CIRC;","circ;",$var);
+        $var = str_replace("GRAVE;","grave;",$var);
+        $var = str_replace("CEDIL;","cedil;",$var);
+        return $var;
 }
 
 /**
@@ -868,6 +892,32 @@ function data($data, $tipo = 0){
     return $data;
 }
 
+/**
+ * Exibe dia da semana de uma determinada data (http://www.htmlstaff.org/ver.php?id=9440)
+ * 
+ * @param string $data  (aaaa-mm-dd)
+ * @return string 
+ * @example diasemana("2011-09-28");
+ */
+function diasemana($data) {
+        $ano =  substr("$data", 0, 4);
+        $mes =  substr("$data", 5, -3);
+        $dia =  substr("$data", 8, 9);
+
+        $diasemana = date("w", mktime(0,0,0,$mes,$dia,$ano) );
+
+        switch($diasemana) {
+                case"0": $diasemana = "Domingo";       break;
+                case"1": $diasemana = "Segunda-Feira"; break;
+                case"2": $diasemana = "Terça-Feira";   break;
+                case"3": $diasemana = "Quarta-Feira";  break;
+                case"4": $diasemana = "Quinta-Feira";  break;
+                case"5": $diasemana = "Sexta-Feira";   break;
+                case"6": $diasemana = "S&aacute;bado"; break;
+        }
+
+        return $diasemana;
+}
 
 /**
  * Scripts para melhorar a segurança
